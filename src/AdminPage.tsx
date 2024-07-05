@@ -4,6 +4,8 @@ import Toast from './components/Toast';
 import './AdminPage.css';
 import axios from 'axios';
 import config from './config';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faSignOutAlt } from '@fortawesome/free-solid-svg-icons'; // 导入退出图标
 
 const AdminPage: React.FC = () => {
   const [envVars, setEnvVars] = useState<any>({});
@@ -30,6 +32,7 @@ const AdminPage: React.FC = () => {
   const [toastType, setToastType] = useState<'success' | 'error'>('success');
   const [isLeaving, setIsLeaving] = useState<boolean>(false);
   const [isLoading, setIsLoading] = useState<boolean>(false);
+  const [isDialogOpen, setIsDialogOpen] = useState<boolean>(false); // 用于控制对话框的显示
 
   const navigate = useNavigate();
 
@@ -110,12 +113,14 @@ const AdminPage: React.FC = () => {
       const response = await axios.post(`${config.apiBaseUrl}/login`, { password });
       if (response.data.message === 'Password correct') {
         setIsAuthenticated(true);
+        const expiryDate = new Date();
         if (rememberMe) {
-          localStorage.setItem('isAuthenticated', 'true');
-          const expiryDate = new Date();
-          expiryDate.setDate(expiryDate.getDate() + 1);
-          localStorage.setItem('authExpiry', expiryDate.toISOString());
+          expiryDate.setDate(expiryDate.getDate() + 1); // 记住登录状态，设置为1天
+        } else {
+          expiryDate.setHours(expiryDate.getHours() + 1); // 默认登录状态，设置为1小时
         }
+        localStorage.setItem('isAuthenticated', 'true');
+        localStorage.setItem('authExpiry', expiryDate.toISOString());
         setToastMessage('密码正确');
         setToastType('success');
         setShowToast(true);
@@ -139,6 +144,21 @@ const AdminPage: React.FC = () => {
       navigate('/');
       window.scrollTo({ top: 0, behavior: 'smooth' }); // 滚动到顶部
     }, 500);
+  };
+
+  const handleLogout = () => {
+    localStorage.removeItem('isAuthenticated');
+    localStorage.removeItem('authExpiry');
+    setIsAuthenticated(false);
+    navigate('/');
+  };
+
+  const openDialog = () => {
+    setIsDialogOpen(true);
+  };
+
+  const closeDialog = () => {
+    setIsDialogOpen(false);
   };
 
   return (
@@ -235,6 +255,24 @@ const AdminPage: React.FC = () => {
         </>
       )}
       {showToast && <Toast message={toastMessage} type={toastType} onClose={() => setShowToast(false)} />}
+      {isAuthenticated && (
+        <div className="logout-button-container">
+          <button onClick={openDialog} className="logout-button">
+            <FontAwesomeIcon icon={faSignOutAlt} />
+          </button>
+        </div>
+      )}
+      {isDialogOpen && (
+        <div className="dialog-overlay">
+          <div className="dialog-content">
+            <h2>你确定要退出吗?</h2>
+            <div className="dialog-buttons">
+              <button onClick={handleLogout} className="dialog-button-yes">是</button>
+              <button onClick={closeDialog} className="dialog-button-no">否</button>
+            </div>
+          </div>
+        </div>
+      )}
     </div>
   );
 };

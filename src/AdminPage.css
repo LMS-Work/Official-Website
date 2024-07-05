@@ -70,3 +70,123 @@
   .title-text{
     margin-top: 45px;
   }
+
+/* 退出按钮的样式 */
+.logout-button-container {
+  position: fixed;
+  bottom: 20px;
+  right: 20px;
+}
+
+.logout-button {
+  background-color: #f44336; /* 红色背景 */
+  color: #ffffff; /* 白色字体 */
+  border: none;
+  border-radius: 8px; /* 圆角 */
+  width: 50px; /* 宽度 */
+  height: 50px; /* 高度 */
+  cursor: pointer;
+  box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.2);
+  transition: background-color 0.3s ease;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.logout-button:hover {
+  background-color: #d32f2f; /* 更深的红色 */
+}
+
+.logout-button:focus {
+  outline: none;
+}
+
+.logout-button svg {
+  width: 24px;
+  height: 24px;
+}
+
+/* 对话框样式 */
+.dialog-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: rgba(0, 0, 0, 0.5);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 1000;
+  animation: fadeIn 0.3s;
+}
+
+.dialog-content {
+  background: #ffffff;
+  padding: 20px;
+  border-radius: 8px;
+  box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.2);
+  animation: slideIn 0.3s;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start; /* 左对齐 */
+}
+
+.dialog-buttons {
+  display: flex;
+  justify-content: flex-end;
+  width: 100%;
+  margin-top: 20px;
+  gap: 10px; /* 添加间距 */
+}
+
+/* 是按钮样式 */
+.dialog-button-yes {
+  background-color: #28a745;
+  color: white;
+  border: none;
+  padding: 10px 20px;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+.dialog-button-yes:hover {
+  background-color: #218838;
+}
+
+/* 否按钮样式 */
+.dialog-button-no {
+  background-color: #dc3545;
+  color: white;
+  border: none;
+  padding: 10px 20px;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+.dialog-button-no:hover {
+  background-color: #c82333;
+}
+
+/* 动画 */
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+@keyframes slideIn {
+  from {
+    transform: translateY(-20px);
+    opacity: 0;
+  }
+  to {
+    transform: translateY(0);
+    opacity: 1;
+  }
+}
