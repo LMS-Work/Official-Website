@@ -152,7 +152,7 @@ const AdminPage: React.FC = () => {
               type="password" 
               value={password} 
               onChange={e => setPassword(e.target.value)} 
-              className="flex-grow p-2 border rounded mb-4 md:mb-0 md:mr-2 password-input"
+              className="flex-grow p-2 border rounded mb-4 md:mb-0 password-input"
             />
           </div>
           <div className="flex flex-col w-full items-center mb-4">
