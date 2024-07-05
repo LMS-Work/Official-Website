@@ -731,3 +731,33 @@ h2 {
   font-size: 1.5rem;
   margin-bottom: 1rem;
 }
+
+/* 旋转加载动画的样式 */
+.spinner {
+  width: 30px; /* 调整大小 */
+  height: 30px; /* 调整大小 */
+  border: 3px solid rgba(173, 216, 230, 0.6); /* 使用浅蓝色 */
+  border-top: 3px solid #ADD8E6; /* 使用浅蓝色 */
+  border-radius: 50%;
+  animation: spin 1s linear infinite;
+  margin-right: 10px; /* 添加右边距 */
+}
+
+@keyframes spin {
+  0% {
+    transform: rotate(0deg);
+  }
+  100% {
+    transform: rotate(360deg);
+  }
+}
+
+/* 隐藏元素 */
+.hidden {
+  display: none;
+}
+
+/* server-name类，用于调整服务器名称的位置 */
+.server-name {
+  margin-left: 10px; /* 添加左边距 */
+}

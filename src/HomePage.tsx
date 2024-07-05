@@ -15,6 +15,7 @@ const HomePage: React.FC = () => {
   const [isDialogClosing, setIsDialogClosing] = useState<boolean>(false);
   const [loading, setLoading] = useState<boolean>(false);
   const [envVars, setEnvVars] = useState<any>({});
+  const [logoLoaded, setLogoLoaded] = useState<boolean>(false); // 添加状态以跟踪Logo是否加载成功
   const currentYear = new Date().getFullYear();
   const navigate = useNavigate();
 
@@ -38,7 +39,7 @@ const HomePage: React.FC = () => {
         const difference = now - startDate;
 
         const days = Math.floor(difference / (1000 * 60 * 60 * 24));
-        const hours = Math.floor((difference % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+        const hours = Math.floor((difference % (1000 * 60 * 60 * 24)) / (1000 * 60));
         const minutes = Math.floor((difference % (1000 * 60 * 60)) / (1000 * 60));
         const seconds = Math.floor((difference % (1000 * 60)) / 1000);
 
@@ -111,8 +112,22 @@ const HomePage: React.FC = () => {
       <header className={`fixed top-0 left-0 right-0 w-full z-10 ${isNightMode ? 'night-mode' : 'day-mode'}`}>
         <div className="header-container flex items-center justify-between">
           <div className="logo-container flex items-center">
-            <img src={envVars.REACT_APP_LOGO_URL} alt="Logo" className="logo icon-rounded" />
-            <div className="text-2xl font-bold">{envVars.REACT_APP_SERVER_NAME}</div>
+            {!logoLoaded && (
+              <div className="flex items-center">
+                <div className="spinner" /> {/* 显示旋转加载动画 */}
+                <div className="text-2xl font-bold server-name">加载中...</div> {/* 添加加载文本 */}
+              </div>
+            )}
+            <img 
+              src={envVars.REACT_APP_LOGO_URL} 
+              alt="Logo" 
+              className={`logo icon-rounded ${logoLoaded ? '' : 'hidden'}`} 
+              onLoad={() => setLogoLoaded(true)} 
+              onError={() => setLogoLoaded(false)}
+            />
+            {logoLoaded && (
+              <div className="text-2xl font-bold server-name">{envVars.REACT_APP_SERVER_NAME}</div>
+            )}
           </div>
           <div className="flex items-center space-x-2"> {/* 添加间隔 */}
             <div className={`theme-switch-button small-button ${isNightMode ? 'night-mode' : 'day-mode'}`} onClick={toggleNightMode}>
@@ -198,7 +213,7 @@ const HomePage: React.FC = () => {
       {/* 页脚 */}
       <footer className={`w-full py-6 text-left footer-text ${isNightMode ? 'night-mode' : 'day-mode'}`}>
         <div className="max-w-screen-xl mx-auto px-4">
-          <p>© 2021-{currentYear} LittleSheep's Minecraft Server. Design with by TCB Work's HTML.<br />备案号：闽ICP备2023020155号-2</p>
+          <p>© 2021-{currentYear} LittleSheep's Minecraft Server. Design with by TCB Work's HTML.<br />备案号：赣ICP备2021010865号-4</p>
         </div>
       </footer>
     </div>
