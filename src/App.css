@@ -1,0 +1,714 @@
+/* 引入 Misans 字体 */
+@import url('https://cdn.jsdelivr.net/npm/misans@4.0.0/lib/Normal/MiSans-Medium.min.css');
+
+/* 设置整体页面的基本样式 */
+body {
+  font-family: 'MiSans', sans-serif;
+  margin: 0;
+  padding: 0;
+  background-color: #fff;
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+}
+
+/* 设置顶部导航栏的样式 */
+header {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  width: 100%;
+  background: white;
+  z-index: 10;
+  box-sizing: border-box;
+  padding: 1rem 6rem; /* 设置导航栏的边距 */
+  display: flex;
+  justify-content: center;
+}
+
+/* 导航栏内部容器样式 */
+.header-container {
+  width: 100%;
+  max-width: 1200px; /* 根据需要调整最大宽度 */
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+/* Logo和文本的容器样式 */
+.logo-container {
+  display: flex;
+  align-items: center;
+}
+
+/* Logo的样式 */
+.logo {
+  width: 40px; /* 设置宽度 */
+  height: 40px; /* 设置高度，使其成为正方形 */
+  border-radius: 8px; /* 添加圆角 */
+  margin-right: 10px; /* 调整Logo和文本之间的间距 */
+}
+/* 设置主内容区域的样式，增加顶部外边距 */
+main {
+  box-sizing: border-box;
+  display: flex;
+  min-height: 100vh;
+  justify-content: center;
+  flex: 1; /* 让主内容区域占据剩余空间 */
+  position: relative;
+}
+
+/* 链接的基础样式 */
+a {
+  text-decoration: none;
+  color: inherit;
+}
+
+/* 链接悬停时的样式 */
+a:hover {
+  border-color: #999;
+}
+
+/* 图标的基础样式 */
+.icon {
+  border: 1px solid #ddd;
+  border-radius: 50%;
+  padding: 8px;
+}
+
+/* 图标悬停时的样式 */
+.icon:hover {
+  border-color: #555;
+}
+
+/* 按钮的基础样式 */
+button {
+  border: 1px solid #ccc;
+  background-color: transparent;
+  color: #000;
+  padding: 10px 20px;
+  border-radius: 8px;
+  cursor: pointer;
+}
+
+/* 按钮悬停时的样式 */
+button:hover {
+  border-color: #999;
+}
+
+/* 渐变文字效果 */
+.bg-gradient-to-r {
+  background-image: linear-gradient(to right, var(--tw-gradient-stops));
+}
+
+.from-blue-400 {
+  --tw-gradient-from: #63b3ed;
+}
+
+.to-blue-600 {
+  --tw-gradient-to: #3182ce;
+}
+
+/* 设置最小高度为视口高度 */
+.min-h-screen {
+  min-height: 100vh;
+}
+
+/* 修改按钮的圆角和边框颜色 */
+a {
+  border-radius: 16px;
+  border: 1px solid #e0e0e0;
+}
+
+/* 修改按钮悬停时的边框颜色 */
+a:hover {
+  border-color: #999;
+}
+
+/* 修改主按钮的圆角 */
+a.rounded-2xl {
+  border-radius: 16px;
+}
+
+/* 修改上方按钮的大小 */
+a.py-2 {
+  padding-top: 8px;
+  padding-bottom: 8px;
+}
+
+a.px-4 {
+  padding-left: 16px;
+  padding-right: 16px;
+}
+
+a.text-lg {
+  font-size: 0.925rem;
+}
+
+/* 修改下方按钮的圆角 */
+.button-square {
+  width: 42px; /* 调整按钮大小 */
+  height: 42px; /* 调整按钮大小 */
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  border-radius: 16px; /* 调整按钮圆角 */
+}
+
+/* 设置页脚样式 */
+footer {
+  padding: 20px 6rem; /* 与顶部导航栏对齐 */
+  width: 100%;
+  background: none;
+  color: #000;
+  font-size: 14px;
+  text-align: left; /* 靠左对齐 */
+  max-width: 100%;
+}
+
+footer p {
+  margin: 0;
+  line-height: 1.5;
+}
+
+.footer-text {
+  text-align: left;
+}
+
+/* 响应式设计：在小屏幕设备上调整字体大小和布局 */
+@media (max-width: 768px) {
+  header {
+    padding: 1rem 2rem;
+  }
+
+  .header-container {
+    justify-content: flex-start;
+  }
+
+  .header-container a {
+    display: none;
+  }
+
+  .main-padding {
+    margin-top: 100px; /* 手机端主内容的顶部外边距 */
+    padding: 0 1rem; /* 手机端主内容的左右内边距 */
+  }
+
+  /* 调整主内容区域的字体大小 */
+  main {
+    font-size: 0.75rem; /* 调整为更小的字体大小 */
+  }
+
+  /* 调整标题和主内容的字体大小 */
+  h1 {
+    font-size: 1.5rem; /* 调整为较小的字体大小 */
+  }
+
+  h2 {
+    font-size: 2rem; /* 调整为较小的字体大小 */
+  }
+
+  p {
+    font-size: 0.875rem; /* 调整为较小的字体大小 */
+  }
+
+  .text-5xl {
+    font-size: 2rem; /* 调整为较小的字体大小 */
+  }
+
+  .text-7xl {
+    font-size: 2.5rem; /* 调整为较小的字体大小 */
+  }
+
+  .text-3xl {
+    font-size: 1.25rem; /* 调整为较小的字体大小 */
+  }
+
+  .text-2xl {
+    font-size: 1rem; /* 调整为较小的字体大小 */
+  }
+
+  footer {
+    padding: 11px 1rem;
+  }
+
+  .main-left {
+    padding-left: 0.9rem;
+  }
+
+  /* 手机端服务器在线时长换行 */
+  .server-online-time br {
+    display: inline;
+  }
+}
+
+/* 桌面端服务器在线时长不换行 */
+@media (min-width: 769px) {
+  .server-online-time br {
+    display: none;
+  }
+}
+
+/* 添加浮现动画 */
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+.fade-in {
+  opacity: 0;
+  animation: fadeIn 1s forwards;
+}
+
+.fade-in-1 {
+  animation-delay: 0.5s;
+}
+
+.fade-in-2 {
+  animation-delay: 1s;
+}
+
+.fade-in-3 {
+  animation-delay: 1.5s;
+}
+
+.fade-in-4 {
+  animation-delay: 2s;
+}
+
+.fade-in-5 {
+  animation-delay: 2.5s;
+}
+
+.fade-in-6 {
+  animation-delay: 3s;
+}
+
+.fade-in-7 {
+  animation-delay: 3.5s;
+}
+
+.fade-in-8 {
+  animation-delay: 4s;
+}
+
+.fade-in-9 {
+  animation-delay: 4.5s;
+}
+
+.fade-in-10 {
+  animation-delay: 5s;
+}
+
+/* 底部居中的按钮样式 */
+.mouse-scroll-button {
+  position: absolute;
+  bottom: 20px; /* 固定在主内容的底部 */
+  left: 50%;
+  transform: translateX(-50%);
+  width: 24px;
+  height: 36px;
+  border: 2px solid #ccc;
+  border-radius: 12px;
+  cursor: pointer;
+}
+
+.mouse-scroll-button::before {
+  content: '';
+  position: absolute;
+  top: 6px;
+  left: 50%;
+  width: 4px;
+  height: 8px;
+  background-color: #ccc;
+  border-radius: 2px;
+  animation: scroll 1.5s infinite;
+  transform: translateX(-50%);
+}
+
+@keyframes scroll {
+  0% {
+    top: 6px;
+    opacity: 1;
+  }
+  50% {
+    top: 14px;
+    opacity: 0;
+  }
+  100% {
+    top: 6px;
+    opacity: 1;
+  }
+}
+
+/* 白天模式样式 */
+body.day-mode {
+  background-color: #fff;
+  color: #000;
+  transition: background-color 0.5s ease, color 0.5s ease;
+}
+
+/* 黑夜模式样式 */
+body.night-mode {
+  background-color: #1a1a1a;
+  color: #f5f5f5;
+  transition: background-color 0.5s ease, color 0.5s ease;
+}
+
+/* 顶部导航栏样式 */
+header.day-mode {
+  background-color: rgba(255, 255, 255, 0.8);
+  color: #000;
+  backdrop-filter: blur(10px); /* 添加高斯模糊效果 */
+  transition: background-color 0.5s ease, color 0.5s ease;
+}
+
+header.night-mode {
+  background-color: rgba(26, 26, 26, 0.8);
+  color: #f5f5f5;
+  backdrop-filter: blur(10px); /* 添加高斯模糊效果 */
+  transition: background-color 0.5s ease, color 0.5s ease;
+}
+
+/* 按钮样式 */
+.button-day {
+  background-color: #fff;
+  color: #000;
+  transition: background-color 0.5s ease, color 0.5s ease;
+}
+
+.button-night {
+  background-color: #1a1a1a;
+  color: #f5f5f5;
+  transition: background-color 0.5s ease, color 0.5s ease;
+}
+
+/* 链接样式 */
+a.day-mode {
+  color: #000;
+}
+
+a.night-mode {
+  color: #f5f5f5;
+}
+
+/* 页脚样式 */
+footer.day-mode {
+  background-color: #fff;
+  color: #000;
+}
+
+footer.night-mode {
+  background-color: #1a1a1a;
+  color: #f5f5f5;
+}
+
+/* 顶部导航栏图标样式 */
+.icon-rounded {
+  border-radius: 15%;
+}
+
+/* 按钮图标样式 */
+.icon-button-rounded {
+  border-radius: 12px;
+}
+
+/* 太阳和月亮图标样式 */
+.theme-icon {
+  font-size: 1.5em;
+  cursor: pointer;
+  transition: transform 0.3s ease, color 0.5s ease;
+}
+
+.theme-icon:hover {
+  transform: rotate(30deg);
+}
+
+/* 日夜模式切换按钮样式 */
+.theme-switch-button {
+  width: 42px;
+  height: 42px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border: 1px solid #ccc;
+  border-radius: 12px;
+  transition: background-color 0.5s ease, border-color 0.5s ease;
+}
+
+.theme-switch-button.day-mode {
+  background-color: #fff;
+  color: #000;
+}
+
+.theme-switch-button.night-mode {
+  background-color: #1a1a1a;
+  color: #f5f5f5;
+}
+
+.theme-switch-button:hover {
+  border-color: #999;
+}
+
+/* 根据系统主题自动切换 */
+@media (prefers-color-scheme: dark) {
+  body {
+    background-color: #1a1a1a;
+    color: #f5f5f5;
+  }
+  header {
+    background-color: rgba(26, 26, 26, 0.8);
+    color: #f5f5f5;
+  }
+}
+
+@media (prefers-color-scheme: light) {
+  body {
+    background-color: #fff;
+    color: #000;
+  }
+  header {
+    background-color: rgba(255, 255, 255, 0.8);
+    color: #000;
+  }
+}
+
+/* 响应式设计 */
+@media (max-width: 768px) {
+  .header-container {
+    justify-content: space-between;
+    padding: 0 1rem;
+  }
+
+  header.day-mode {
+    padding-left: 18px; /* 手机端的左内边距 */
+  }
+
+  header.night-mode{
+    padding-left: 18px;
+  }
+
+  .logo-container {
+    flex-direction: row;
+    align-items: center;
+  }
+
+  .logo {
+    width: 42px;
+    height: 42px;
+    margin-right: 0.5rem; /* 调整 logo 和文字之间的间距 */
+  }
+}
+
+/* 对话框样式 */
+.dialog-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: rgba(0, 0, 0, 0.5);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 1000;
+  backdrop-filter: blur(10px); /* 添加高斯模糊背景 */
+  animation: fadeIn 0.3s; /* 淡入动画 */
+}
+
+.dialog-content {
+  background: rgba(255, 255, 255, 0.8);
+  padding: 20px;
+  border-radius: 8px;
+  max-width: 500px;
+  width: 90%;
+  text-align: left;
+  position: relative;
+  animation: slideIn 0.3s; /* 滑入动画 */
+  backdrop-filter: blur(10px); /* 添加背景高斯模糊 */
+}
+
+.dialog-content.night-mode {
+  background: rgba(26, 26, 26, 0.8);
+  color: #f5f5f5;
+}
+
+.dialog-content.day-mode {
+  background: rgba(255, 255, 255, 0.8);
+  color: #000;
+}
+
+.dialog-close {
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  cursor: pointer;
+  font-size: 1.2em;
+}
+
+.dialog-content h2 {
+  margin-bottom: 20px;
+}
+
+.dialog-address {
+  margin-bottom: 60px; /* 增加地址与按钮之间的距离 */
+}
+
+.dialog-button {
+  position: absolute;
+  right: 20px;
+  bottom: 20px;
+  background-color: #007bff;
+  color: #fff;
+  border: none;
+  cursor: pointer;
+  padding: 10px 20px;
+  border-radius: 8px;
+  transition: background-color 0.3s;
+}
+
+.dialog-button:hover {
+  background-color: #0056b3;
+}
+
+/* 淡入动画 */
+@keyframes fadeIn {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+
+/* 滑入动画 */
+@keyframes slideIn {
+  from { transform: translateY(-20px); }
+  to { transform: translateY(0); }
+}
+
+/* 滑出动画 */
+@keyframes slideOut {
+  from { transform: translateY(0); }
+  to { transform: translateY(-20px); }
+}
+
+/* 对话框关闭动画 */
+.slide-out {
+  animation: slideOut 0.3s forwards; /* 滑出动画 */
+}
+
+/* 响应式设计 */
+@media (max-width: 768px) {
+  .header-container {
+    justify-content: space-between;
+    padding: 0 1rem;
+  }
+
+  header.day-mode {
+    padding-left: 18px; /* 手机端的左内边距 */
+  }
+
+  .logo-container {
+    flex-direction: row;
+    align-items: center;
+  }
+
+  .logo {
+    width: 42px;
+    height: 42px;
+    border-radius: 12px; /* 设置 logo 为正方形并加圆角 */
+    margin-right: 0.5rem; /* 调整 logo 和文字之间的间距 */
+  }
+
+  .dialog-content h2 {
+    font-size: 1.5rem; /* 调整对话框标题大小 */
+  }
+
+  .dialog-address {
+    font-size: 0.875rem; /* 调整对话框地址文字大小 */
+  }
+
+  .dialog-button {
+    font-size: 0.875rem; /* 调整对话框按钮文字大小 */
+  }
+
+  .dialog-button {
+    padding: 8px 16px; /* 调整对话框按钮内边距 */
+  }
+}
+
+/* Small button styles */
+.small-button {
+  width: 32px;
+  height: 32px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 8px;
+  cursor: pointer;
+}
+
+.small-button .theme-icon {
+  font-size: 1.1em;
+}
+
+/* Loading overlay styles */
+.loading-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: rgba(255, 255, 255, 0.8);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 10000;
+}
+
+.loading-spinner {
+  width: 50px;
+  height: 50px;
+  border: 5px solid rgba(0, 0, 0, 0.1);
+  border-top: 5px solid #3498db;
+  border-radius: 50%;
+  animation: spin 1s linear infinite;
+}
+
+@keyframes spin {
+  0% { transform: rotate(0deg); }
+  100% { transform: rotate(360deg); }
+}
+
+/* Admin page styles */
+.admin-page {
+  background-color: #f9f9f9;
+  width: 100%;
+}
+
+.admin-form {
+  background-color: white;
+  border: 1px solid #ddd;
+  padding: 20px;
+  border-radius: 8px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.admin-form .grid {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 16px;
+}
+
+@media (min-width: 768px) {
+  .admin-form .grid {
+    grid-template-columns: 1fr 1fr;
+  }
+}
+
+h2 {
+  font-size: 1.5rem;
+  margin-bottom: 1rem;
+}

@@ -1,0 +1,72 @@
+.admin-page.leave, .admin-page.login {
+    animation: fadeOut 0.5s forwards;
+  }
+  
+  @keyframes fadeOut {
+    from {
+      opacity: 1;
+      transform: translateY(0);
+    }
+    to {
+      opacity: 0;
+      transform: translateY(20px);
+    }
+  }
+  
+  .loading-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: rgba(255, 255, 255, 0.8);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 10000;
+  }
+  
+  .login-container {
+    width: 100%;
+    max-width: 400px;
+    padding: 2rem;
+    border-radius: 8px;
+    background: #fff;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  }
+  
+  .login-container h1 {
+    font-size: 1.75rem;
+    margin-bottom: 1.5rem;
+    text-align: center;
+  }
+  
+  .login-container input[type="password"] {
+    width: 100%;
+    margin-bottom: 1rem;
+  }
+  
+  .password-input {
+    width: 100%; /* 增加密码输入框的宽度 */
+  }
+  
+  .button-full-width {
+    width: 100%; /* 使按钮宽度占满父容器 */
+  }
+  
+  .login-container label {
+    font-size: 0.875rem;
+    color: #4a4a4a;
+  }
+  
+  .admin-form {
+    padding: 2rem;
+  }
+  
+  .admin-form .border {
+    margin-bottom: 0.1rem;
+  }
+  
+  .title-text{
+    margin-top: 45px;
+  }
