@@ -360,6 +360,25 @@ body.night-mode {
   transition: background-color 0.5s ease, color 0.5s ease;
 }
 
+.night-mode {
+  background-color: #121212;
+  color: #ffffff;
+}
+
+/* 针对服务器地址对话框的样式 */
+.dialog-content.night-mode {
+  color: #ffffff;
+}
+
+/* 对于所有在夜间模式下的文本设置白色字体 */
+.night-mode .text-black {
+  color: #ffffff !important;
+}
+
+.night-mode .text-xl {
+  color: #ffffff !important;
+}
+
 /* 顶部导航栏样式 */
 header.day-mode {
   background-color: rgba(255, 255, 255, 0.8);
