@@ -209,11 +209,10 @@ const HomePage: React.FC = () => {
           </div>
         </div>
       )}
-
       {/* 页脚 */}
       <footer className={`w-full py-6 text-left footer-text ${isNightMode ? 'night-mode' : 'day-mode'}`}>
         <div className="max-w-screen-xl mx-auto px-4">
-          <p>© 2021-{currentYear} LittleSheep's Minecraft Server. Design with by TCB Work's HTML.<br />备案号：赣ICP备2021010865号-4</p>
+          <p>© 2021-{currentYear} LittleSheep's Minecraft Server. Design with by TCB Work's HTML.<br />备案号：{envVars.REACT_APP_BEIAN}</p>
         </div>
       </footer>
     </div>

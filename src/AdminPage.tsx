@@ -18,6 +18,7 @@ const AdminPage: React.FC = () => {
   const [overseasAddress, setOverseasAddress] = useState<string>('');
   const [typewriterWords, setTypewriterWords] = useState<string>('');
   const [startTime, setStartTime] = useState<string>('');
+  const [beian, setbeian] = useState<string>('');
   const [buttonLinks, setButtonLinks] = useState<{ [key: string]: string }>({
     github: '',
     bilibili: '',
@@ -63,6 +64,7 @@ const AdminPage: React.FC = () => {
         setOverseasAddress(vars.REACT_APP_OVERSEAS_ADDRESS);
         setTypewriterWords(vars.REACT_APP_TYPEWRITER_WORDS);
         setStartTime(vars.REACT_APP_START_TIME);
+        setbeian(vars.REACT_APP_BEIAN);
         setButtonLinks({
           github: vars.REACT_APP_GITHUB_LINK,
           bilibili: vars.REACT_APP_BILIBILI_LINK,
@@ -92,6 +94,7 @@ const AdminPage: React.FC = () => {
       REACT_APP_BILIBILI_LINK: buttonLinks.bilibili,
       REACT_APP_QQ_LINK: buttonLinks.qq,
       REACT_APP_EMAIL_LINK: buttonLinks.email,
+      REACT_APP_BEIAN: beian,
       REACT_APP_ADMIN_PASSWORD: envVars.REACT_APP_ADMIN_PASSWORD // 确保不修改管理员密码
     };
 
@@ -245,6 +248,10 @@ const AdminPage: React.FC = () => {
               <div className="mb-4">
                 <label>Email链接：</label>
                 <input type="text" value={buttonLinks.email} onChange={e => setButtonLinks({ ...buttonLinks, email: e.target.value })} className="p-2 border rounded w-full" />
+              </div>
+              <div className="mb-4">
+                <label>备案号：</label>
+                <input type="text" value={beian} onChange={e => setbeian(e.target.value)} className="p-2 border rounded w-full" />
               </div>
             </div>
             <div className="flex flex-col">
