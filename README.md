@@ -42,13 +42,13 @@
     安装前端项目依赖：
 
     ```bash
-    npm install
+    pnpm install
     ```
 
     确保你在项目根目录下，并运行：
 
     ```bash
-    npm start
+    pnpm start
     ```
 
 ## 使用指南
