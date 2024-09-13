@@ -64,7 +64,7 @@
   }
   
   .admin-form .border {
-    margin-bottom: 0.1rem;
+    margin-bottom: 0.3rem;
   }
   
   .title-text{
@@ -189,4 +189,8 @@
     transform: translateY(0);
     opacity: 1;
   }
+}
+
+.glm-top{
+  margin-top: 39px;
 }

@@ -39,9 +39,9 @@ const HomePage: React.FC = () => {
         const difference = now - startDate;
 
         const days = Math.floor(difference / (1000 * 60 * 60 * 24));
-        const hours = Math.floor((difference % (1000 * 60 * 60 * 24)) / (1000 * 60));
+        const hours = Math.floor((difference % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
         const minutes = Math.floor((difference % (1000 * 60 * 60)) / (1000 * 60));
-        const seconds = Math.floor((difference % (1000 * 60)) / 1000);
+        const seconds = Math.floor((difference % (1000 * 60)) / 1000);        
 
         setTimeElapsed(`${days} 天 ${hours} 小时 ${minutes} 分钟 ${seconds} 秒`);
       }, 1000);
@@ -148,12 +148,12 @@ const HomePage: React.FC = () => {
 
       {/* 主内容区域 */}
       <main className="flex flex-col items-center w-full text-left flex-grow main-left">
-        <div className="w-full max-w-screen-lg px-4">
+        <div className="w-full max-w-screen-lg px-4 phone-wide">
           <h1 className="text-5xl mb-6 fade-in fade-in-1">欢迎来到</h1>
           <h2 className="text-7xl font-bold mb-6 bg-gradient-to-r from-blue-400 to-blue-600 text-transparent bg-clip-text fade-in fade-in-2">{envVars.REACT_APP_SERVER_NAME}</h2>
           <p className="text-3xl mb-6 fade-in fade-in-3">
             <Typewriter
-              words={envVars.REACT_APP_TYPEWRITER_WORDS?.split(',') || ['一个机械工艺服务器', '享受Minecraft的乐趣']}
+              words={envVars.REACT_APP_TYPEWRITER_WORDS?.split(',') || ['是一个机械工艺服务器', '是一个女仆服务器','是一个养老服务器','可以享受Minecraft的乐趣']}
               loop={Infinity}
               cursor
               cursorStyle='|'
@@ -170,7 +170,7 @@ const HomePage: React.FC = () => {
           </p>
           <div className="flex space-x-4 mt-8 fade-in fade-in-7">
             <button onClick={openDialog} className={`text-black py-2 px-4 rounded-2xl border border-gray-300 text-lg ${isNightMode ? 'night-mode' : 'day-mode'}`} style={{ fontSize: '0.925rem' }}>服务器地址</button>
-            <a href="#" className={`text-black py-2 px-4 rounded-2xl border border-gray-300 text-lg ${isNightMode ? 'night-mode' : 'day-mode'}`} style={{ fontSize: '0.925rem' }}>了解更多</a>
+            <a href="/home" className={`text-black py-2 px-4 rounded-2xl border border-gray-300 text-lg ${isNightMode ? 'night-mode' : 'day-mode'}`} style={{ fontSize: '0.925rem' }}>了解更多</a>
           </div>
           <div className="flex mt-8 fade-in fade-in-8" style={{ gap: '1.2rem' }}>
             <a href={envVars.REACT_APP_GITHUB_LINK} className={`button-square border border-gray-300 rounded-xl hover:border-gray-400 icon-button-rounded ${isNightMode ? 'night-mode' : 'day-mode'}`}>

@@ -191,7 +191,7 @@ const AdminPage: React.FC = () => {
         </div>
       ) : (
         <>
-          <h2 className="mb-4 text-center">管理页面</h2>
+          <h2 className="mb-4 text-center glm-top">管理页面</h2>
           <div className="admin-form w-full max-w-2xl p-4 border rounded mb-8">
             <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
               <div className="mb-4">

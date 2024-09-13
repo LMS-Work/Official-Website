@@ -1,9 +1,15 @@
-/* 引入 Misans 字体 */
-@import url('https://cdn.jsdelivr.net/npm/misans@4.0.0/lib/Normal/MiSans-Medium.min.css');
+/* 引入 HarmonyOS_Sans_SC_Mediums 字体 */
+@font-face {
+  font-family:HarmonyOS_Sans_SC_Medium;font-style: normal;font-display: swap;
+  src: url('https://cdn.jsdelivr.net/gh/irozhi/HarmonyOS-Sans/HarmonyOS_Sans_SC/HarmonyOS_Sans_SC_Medium.woff2') format('woff2'),
+       url('https://cdn.jsdelivr.net/gh/irozhi/HarmonyOS-Sans/HarmonyOS_Sans_SC/HarmonyOS_Sans_SC_Medium.woff') format('woff');
+}
+
+*{font-family:HarmonyOS_Sans_SC_Medium;}
 
 /* 设置整体页面的基本样式 */
 body {
-  font-family: 'MiSans', sans-serif;
+  font-family: 'HarmonyOS_Sans_SC_Medium', sans-serif;
   margin: 0;
   padding: 0;
   background-color: #fff;
@@ -709,10 +715,9 @@ footer.night-mode {
 
 .admin-form {
   background-color: white;
-  border: 1px solid #ddd;
+  border: 16px solid #f9f9f9;
   padding: 20px;
-  border-radius: 8px;
-  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  border-radius: 35px;
 }
 
 .admin-form .grid {
