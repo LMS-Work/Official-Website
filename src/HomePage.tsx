@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useReducer } from 'react';
 import { useNavigate } from 'react-router-dom';
 import './App.css';
 import { Typewriter } from 'react-simple-typewriter';
@@ -8,14 +8,43 @@ import { faEnvelope, faSun, faMoon, faTimes, faCog } from '@fortawesome/free-sol
 import axios from 'axios';
 import config from './config'; // 导入配置文件
 
+// 定义对话框状态的类型
+interface DialogState {
+  isOpen: boolean;
+  isClosing: boolean;
+}
+
+// 定义对话框状态的动作类型
+type DialogAction = 
+  | { type: 'OPEN' }
+  | { type: 'CLOSE' }
+  | { type: 'RESET' };
+
+// 对话框状态管理
+const dialogReducer = (state: DialogState, action: DialogAction): DialogState => {
+  switch (action.type) {
+    case 'OPEN':
+      return { isOpen: true, isClosing: false };
+    case 'CLOSE':
+      return { ...state, isClosing: true };
+    case 'RESET':
+      return { isOpen: false, isClosing: false };
+    default:
+      return state;
+  }
+};
+
 const HomePage: React.FC = () => {
   const [timeElapsed, setTimeElapsed] = useState<string>('');
   const [isNightMode, setIsNightMode] = useState<boolean>(window.matchMedia('(prefers-color-scheme: dark)').matches);
-  const [isDialogOpen, setIsDialogOpen] = useState<boolean>(false);
-  const [isDialogClosing, setIsDialogClosing] = useState<boolean>(false);
   const [loading, setLoading] = useState<boolean>(false);
   const [envVars, setEnvVars] = useState<any>({});
-  const [logoLoaded, setLogoLoaded] = useState<boolean>(false); // 添加状态以跟踪Logo是否加载成功
+  const [logoLoaded, setLogoLoaded] = useState<boolean>(false);
+  const [error, setError] = useState<string | null>(null); // 用于显示错误提示
+
+  // 使用 useReducer 管理对话框状态
+  const [dialogState, dispatch] = useReducer(dialogReducer, { isOpen: false, isClosing: false });
+
   const currentYear = new Date().getFullYear();
   const navigate = useNavigate();
 
@@ -27,6 +56,7 @@ const HomePage: React.FC = () => {
         setEnvVars(response.data);
       } catch (error) {
         console.error('Failed to fetch environment variables', error);
+        setError('无法加载服务器信息'); // 设置错误提示
       }
     };
 
@@ -81,15 +111,13 @@ const HomePage: React.FC = () => {
   }, []);
 
   const openDialog = () => {
-    setIsDialogOpen(true);
-    setIsDialogClosing(false);
+    dispatch({ type: 'OPEN' });
   };
 
   const closeDialog = () => {
-    setIsDialogClosing(true);
+    dispatch({ type: 'CLOSE' });
     setTimeout(() => {
-      setIsDialogOpen(false);
-      setIsDialogClosing(false);
+      dispatch({ type: 'RESET' });
     }, 300); // 确保动画持续时间一致
   };
 
@@ -112,24 +140,29 @@ const HomePage: React.FC = () => {
       <header className={`fixed top-0 left-0 right-0 w-full z-10 ${isNightMode ? 'night-mode' : 'day-mode'}`}>
         <div className="header-container flex items-center justify-between">
           <div className="logo-container flex items-center">
-            {!logoLoaded && (
+            {!logoLoaded && !error && (
               <div className="flex items-center">
                 <div className="spinner" /> {/* 显示旋转加载动画 */}
                 <div className="text-2xl font-bold server-name">加载中...</div> {/* 添加加载文本 */}
               </div>
             )}
-            <img 
-              src={envVars.REACT_APP_LOGO_URL} 
-              alt="Logo" 
-              className={`logo icon-rounded ${logoLoaded ? '' : 'hidden'}`} 
-              onLoad={() => setLogoLoaded(true)} 
-              onError={() => setLogoLoaded(false)}
-            />
-            {logoLoaded && (
+            {error && (
+              <div className="text-2xl font-bold server-name">{error}</div>
+            )}
+            {!error && (
+              <img 
+                src={envVars.REACT_APP_LOGO_URL} 
+                alt="Logo" 
+                className={`logo icon-rounded ${logoLoaded ? '' : 'hidden'}`} 
+                onLoad={() => setLogoLoaded(true)} 
+                onError={() => setLogoLoaded(false)}
+              />
+            )}
+            {logoLoaded && !error && (
               <div className="text-2xl font-bold server-name">{envVars.REACT_APP_SERVER_NAME}</div>
             )}
           </div>
-          <div className="flex items-center space-x-2"> {/* 添加间隔 */}
+          <div className="flex items-center space-x-2">
             <div className={`theme-switch-button small-button ${isNightMode ? 'night-mode' : 'day-mode'}`} onClick={toggleNightMode}>
               <FontAwesomeIcon 
                 icon={isNightMode ? faSun : faMoon} 
@@ -193,9 +226,9 @@ const HomePage: React.FC = () => {
       <div className="mouse-scroll-button" onClick={handleScrollToBottom}></div>
 
       {/* 对话框 */}
-      {isDialogOpen && (
+      {dialogState.isOpen && (
         <div className="dialog-overlay" onClick={closeDialog}>
-          <div className={`dialog-content ${isNightMode ? 'night-mode' : 'day-mode'} ${isDialogClosing ? 'slide-out' : 'slide-in'}`} onClick={e => e.stopPropagation()}>
+          <div className={`dialog-content ${isNightMode ? 'night-mode' : 'day-mode'} ${dialogState.isClosing ? 'slide-out' : 'slide-in'}`} onClick={e => e.stopPropagation()}>
             <FontAwesomeIcon icon={faTimes} className="dialog-close" onClick={closeDialog} />
             <h2>服务器地址</h2>
             <div className="dialog-address">
