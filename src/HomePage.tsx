@@ -121,6 +121,24 @@ const HomePage: React.FC = () => {
     }, 300); // 确保动画持续时间一致
   };
 
+  const [isScrollButtonVisible, setIsScrollButtonVisible] = useState<boolean>(true);
+
+  useEffect(() => {
+    const handleResize = () => {
+      setIsScrollButtonVisible(window.innerHeight > 720); // 当窗口高度小于600px时隐藏按钮
+    };
+  
+    window.addEventListener('resize', handleResize);
+  
+    // 初次检查窗口大小
+    handleResize();
+  
+    return () => {
+      window.removeEventListener('resize', handleResize);
+    };
+  }, []);
+  
+
   const handleNavigation = (path: string) => {
     setLoading(true);
     setTimeout(() => {
@@ -180,7 +198,7 @@ const HomePage: React.FC = () => {
       </header>
 
       {/* 主内容区域 */}
-      <main className="flex flex-col items-center w-full text-left flex-grow main-left">
+      <main className="flex flex-col items-center w-full text-left flex-grow main-left" style={{ paddingTop: '75px' }}>
         <div className="w-full max-w-screen-lg px-4 phone-wide">
           <h1 className="text-5xl mb-6 fade-in fade-in-1">欢迎来到</h1>
           <h2 className="text-7xl font-bold mb-6 bg-gradient-to-r from-blue-400 to-blue-600 text-transparent bg-clip-text fade-in fade-in-2">{envVars.REACT_APP_SERVER_NAME}</h2>
@@ -223,7 +241,8 @@ const HomePage: React.FC = () => {
       </main>
 
       {/* 滑动按钮 */}
-      <div className="mouse-scroll-button" onClick={handleScrollToBottom}></div>
+      {isScrollButtonVisible && <div className="mouse-scroll-button" onClick={handleScrollToBottom}></div>}
+
 
       {/* 对话框 */}
       {dialogState.isOpen && (
