@@ -7,6 +7,7 @@ import { faGithub, faBilibili, faQq } from '@fortawesome/free-brands-svg-icons';
 import { faEnvelope, faSun, faMoon, faTimes, faCog } from '@fortawesome/free-solid-svg-icons';
 import axios from 'axios';
 import config from './config'; // 导入配置文件
+import './fonts/font.css';  // 添加这一行
 
 // 定义对话框状态的类型
 interface DialogState {
@@ -34,11 +35,29 @@ const dialogReducer = (state: DialogState, action: DialogAction): DialogState =>
   }
 };
 
+// 将环境变量类型定义明确化
+interface EnvVars {
+  REACT_APP_START_TIME?: string;
+  REACT_APP_LOGO_URL?: string;
+  REACT_APP_SERVER_NAME?: string;
+  REACT_APP_TYPEWRITER_WORDS?: string;
+  REACT_APP_GITHUB_LINK?: string;
+  REACT_APP_BILIBILI_LINK?: string;
+  REACT_APP_QQ_LINK?: string;
+  REACT_APP_EMAIL_LINK?: string;
+  REACT_APP_IPV4_ADDRESS?: string;
+  REACT_APP_IPV6_ADDRESS?: string;
+  REACT_APP_BACKUP_ADDRESS?: string;
+  REACT_APP_BEDROCK_ADDRESS?: string;
+  REACT_APP_OVERSEAS_ADDRESS?: string;
+  REACT_APP_BEIAN?: string;
+}
+
 const HomePage: React.FC = () => {
   const [timeElapsed, setTimeElapsed] = useState<string>('');
   const [isNightMode, setIsNightMode] = useState<boolean>(window.matchMedia('(prefers-color-scheme: dark)').matches);
   const [loading, setLoading] = useState<boolean>(false);
-  const [envVars, setEnvVars] = useState<any>({});
+  const [envVars, setEnvVars] = useState<EnvVars>({});
   const [logoLoaded, setLogoLoaded] = useState<boolean>(false);
   const [error, setError] = useState<string | null>(null); // 用于显示错误提示
 
@@ -49,35 +68,39 @@ const HomePage: React.FC = () => {
   const navigate = useNavigate();
 
   useEffect(() => {
-    // Fetch environment variables from server
     const fetchEnvVars = async () => {
       try {
+        setLoading(true);
         const response = await axios.get(`${config.apiBaseUrl}/env`);
         setEnvVars(response.data);
       } catch (error) {
         console.error('Failed to fetch environment variables', error);
-        setError('无法加载服务器信息'); // 设置错误提示
+        setError('无法加载服务器信息');
+      } finally {
+        setLoading(false);
       }
     };
 
     fetchEnvVars();
+  }, []); // 移除不必要的依赖
 
-    if (envVars.REACT_APP_START_TIME) {
-      const startDate = new Date(envVars.REACT_APP_START_TIME).getTime();
-      const interval = setInterval(() => {
-        const now = new Date().getTime();
-        const difference = now - startDate;
+  useEffect(() => {
+    if (!envVars.REACT_APP_START_TIME) return;
 
-        const days = Math.floor(difference / (1000 * 60 * 60 * 24));
-        const hours = Math.floor((difference % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
-        const minutes = Math.floor((difference % (1000 * 60 * 60)) / (1000 * 60));
-        const seconds = Math.floor((difference % (1000 * 60)) / 1000);        
+    const startDate = new Date(envVars.REACT_APP_START_TIME).getTime();
+    const interval = setInterval(() => {
+      const now = new Date().getTime();
+      const difference = now - startDate;
 
-        setTimeElapsed(`${days} 天 ${hours} 小时 ${minutes} 分钟 ${seconds} 秒`);
-      }, 1000);
+      const days = Math.floor(difference / (1000 * 60 * 60 * 24));
+      const hours = Math.floor((difference % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+      const minutes = Math.floor((difference % (1000 * 60 * 60)) / (1000 * 60));
+      const seconds = Math.floor((difference % (1000 * 60)) / 1000);        
 
-      return () => clearInterval(interval);
-    }
+      setTimeElapsed(`${days} 天 ${hours} 小时 ${minutes} 分钟 ${seconds} 秒`);
+    }, 1000);
+
+    return () => clearInterval(interval);
   }, [envVars.REACT_APP_START_TIME]);
 
   const handleScrollToBottom = () => {
@@ -148,7 +171,7 @@ const HomePage: React.FC = () => {
   };
 
   return (
-    <div className="flex flex-col min-h-screen">
+    <div className="flex flex-col min-h-screen font-harmony">
       {loading && (
         <div className="loading-overlay flex items-center justify-center">
           <div className="loading-spinner"></div>
@@ -200,8 +223,10 @@ const HomePage: React.FC = () => {
       {/* 主内容区域 */}
       <main className="flex flex-col items-center w-full text-left flex-grow main-left" style={{ paddingTop: '75px' }}>
         <div className="w-full max-w-screen-lg px-4 phone-wide">
-          <h1 className="text-5xl mb-6 fade-in fade-in-1">欢迎来到</h1>
-          <h2 className="text-7xl font-bold mb-6 bg-gradient-to-r from-blue-400 to-blue-600 text-transparent bg-clip-text fade-in fade-in-2">{envVars.REACT_APP_SERVER_NAME}</h2>
+          <h1 className="text-4xl md:text-5xl mb-4 md:mb-6 fade-in fade-in-1 font-harmony">欢迎来到</h1>
+          <h2 className="text-5xl md:text-7xl font-bold mb-4 md:mb-6 bg-gradient-to-r from-blue-400 to-blue-600 text-transparent bg-clip-text fade-in fade-in-2 font-harmony">
+            {envVars.REACT_APP_SERVER_NAME}
+          </h2>
           <p className="text-3xl mb-6 fade-in fade-in-3">
             <Typewriter
               words={envVars.REACT_APP_TYPEWRITER_WORDS?.split(',') || ['是一个机械工艺服务器', '是一个女仆服务器','是一个养老服务器','可以享受Minecraft的乐趣']}
@@ -221,7 +246,7 @@ const HomePage: React.FC = () => {
           </p>
           <div className="flex space-x-4 mt-8 fade-in fade-in-7">
             <button onClick={openDialog} className={`text-black py-2 px-4 rounded-2xl border border-gray-300 text-lg ${isNightMode ? 'night-mode' : 'day-mode'}`} style={{ fontSize: '0.925rem' }}>服务器地址</button>
-            <a href="/home" className={`text-black py-2 px-4 rounded-2xl border border-gray-300 text-lg ${isNightMode ? 'night-mode' : 'day-mode'}`} style={{ fontSize: '0.925rem' }}>了解更多</a>
+            <a href="https://wiki.tcbmc.cc" className={`text-black py-2 px-4 rounded-2xl border border-gray-300 text-lg ${isNightMode ? 'night-mode' : 'day-mode'}`} style={{ fontSize: '0.925rem' }}>了解更多</a>
           </div>
           <div className="flex mt-8 fade-in fade-in-8" style={{ gap: '1.2rem' }}>
             <a href={envVars.REACT_APP_GITHUB_LINK} className={`button-square border border-gray-300 rounded-xl hover:border-gray-400 icon-button-rounded ${isNightMode ? 'night-mode' : 'day-mode'}`}>
