@@ -56,10 +56,10 @@ interface EnvVars {
 const HomePage: React.FC = () => {
   const [timeElapsed, setTimeElapsed] = useState<string>('');
   const [isNightMode, setIsNightMode] = useState<boolean>(window.matchMedia('(prefers-color-scheme: dark)').matches);
-  const [loading, setLoading] = useState<boolean>(false);
+  const [loading, setLoading] = useState<boolean>(true);
   const [envVars, setEnvVars] = useState<EnvVars>({});
+  const [error, setError] = useState<string | null>(null);
   const [logoLoaded, setLogoLoaded] = useState<boolean>(false);
-  const [error, setError] = useState<string | null>(null); // 用于显示错误提示
 
   // 使用 useReducer 管理对话框状态
   const [dialogState, dispatch] = useReducer(dialogReducer, { isOpen: false, isClosing: false });
@@ -71,18 +71,35 @@ const HomePage: React.FC = () => {
     const fetchEnvVars = async () => {
       try {
         setLoading(true);
-        const response = await axios.get(`${config.apiBaseUrl}/env`);
-        setEnvVars(response.data);
-      } catch (error) {
+        // 从 localStorage 获取 token
+        const token = localStorage.getItem('jwt_token');
+        
+        const response = await axios.get(`${config.apiBaseUrl}/public-env`, {
+          headers: {
+            Authorization: token ? `Bearer ${token}` : '',
+          }
+        });
+        
+        // 确保响应数据结构正确
+        if (response.data && response.data.success && response.data.data) {
+          setEnvVars(response.data.data);
+        } else {
+          throw new Error('Invalid response format');
+        }
+      } catch (error: any) {
         console.error('Failed to fetch environment variables', error);
-        setError('无法加载服务器信息');
+        if (error.response?.status === 401 || error.response?.status === 403) {
+          setError('认证失败，请重新登录');
+        } else {
+          setError('无法加载服务器信息');
+        }
       } finally {
         setLoading(false);
       }
     };
 
     fetchEnvVars();
-  }, []); // 移除不必要的依赖
+  }, []);
 
   useEffect(() => {
     if (!envVars.REACT_APP_START_TIME) return;
@@ -163,30 +180,20 @@ const HomePage: React.FC = () => {
   
 
   const handleNavigation = (path: string) => {
-    setLoading(true);
-    setTimeout(() => {
-      navigate(path);
-      setLoading(false);
-    }, 500); // 模拟加载动画
+    // 不需要设置 loading 状态，因为导航本身会触发路由变化
+    navigate(path);
   };
 
   return (
     <div className="flex flex-col min-h-screen font-harmony">
-      {loading && (
+      {loading && ( // 只使用一个加载状态
         <div className="loading-overlay flex items-center justify-center">
-          <div className="loading-spinner"></div>
         </div>
       )}
       {/* 顶部导航栏 */}
       <header className={`fixed top-0 left-0 right-0 w-full z-10 ${isNightMode ? 'night-mode' : 'day-mode'}`}>
         <div className="header-container flex items-center justify-between">
           <div className="logo-container flex items-center">
-            {!logoLoaded && !error && (
-              <div className="flex items-center">
-                <div className="spinner" /> {/* 显示旋转加载动画 */}
-                <div className="text-2xl font-bold server-name">加载中...</div> {/* 添加加载文本 */}
-              </div>
-            )}
             {error && (
               <div className="text-2xl font-bold server-name">{error}</div>
             )}
@@ -194,22 +201,61 @@ const HomePage: React.FC = () => {
               <img 
                 src={envVars.REACT_APP_LOGO_URL} 
                 alt="Logo" 
-                className={`logo icon-rounded ${logoLoaded ? '' : 'hidden'}`} 
-                onLoad={() => setLogoLoaded(true)} 
-                onError={() => setLogoLoaded(false)}
+                className={`logo icon-rounded ${!loading ? '' : 'hidden'}`}
+                onLoad={() => {
+                  setLogoLoaded(true);
+                  setLoading(false);
+                }}
+                onError={() => {
+                  setLogoLoaded(false);
+                  setLoading(false);
+                }}
               />
             )}
-            {logoLoaded && !error && (
+            {!loading && !error && (
               <div className="text-2xl font-bold server-name">{envVars.REACT_APP_SERVER_NAME}</div>
             )}
           </div>
           <div className="flex items-center space-x-2">
+            {/* 添加服务器地图链接 */}
+            <a 
+              href="https://map.tcbmc.cc" 
+              target="_blank" 
+              rel="noopener noreferrer"
+              className={`nav-link ${isNightMode ? 'text-white' : 'text-black'}`}
+              style={{ 
+                marginRight: '15px', 
+                fontSize: '14px',
+                textDecoration: 'none'
+              }}
+            >
+              服务器地图
+            </a>
+            
+            {/* 添加地铁线路图链接 */}
+            <a 
+              href="https://metro.tcbmc.cc" 
+              target="_blank" 
+              rel="noopener noreferrer"
+              className={`nav-link ${isNightMode ? 'text-white' : 'text-black'}`}
+              style={{ 
+                marginRight: '15px', 
+                fontSize: '14px',
+                textDecoration: 'none'
+              }}
+            >
+              地铁线路图
+            </a>
+
+            {/* 原有的主题切换按钮 */}
             <div className={`theme-switch-button small-button ${isNightMode ? 'night-mode' : 'day-mode'}`} onClick={toggleNightMode}>
               <FontAwesomeIcon 
                 icon={isNightMode ? faSun : faMoon} 
                 className="theme-icon" 
               />
             </div>
+
+            {/* 原有的管理面板按钮 */}
             <div className={`theme-switch-button small-button ${isNightMode ? 'night-mode' : 'day-mode'}`} onClick={() => handleNavigation('/admin')}>
               <FontAwesomeIcon 
                 icon={faCog} 

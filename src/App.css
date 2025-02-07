@@ -458,8 +458,8 @@ footer.night-mode {
   display: flex;
   align-items: center;
   justify-content: center;
-  border: 1px solid #ccc;
-  border-radius: 12px;
+  border-radius: 16px;
+  border: 1px solid #e0e0e0;
   transition: background-color 0.5s ease, border-color 0.5s ease;
 }
 
@@ -691,12 +691,13 @@ footer.night-mode {
 }
 
 .loading-spinner {
-  width: 50px;
-  height: 50px;
-  border: 5px solid rgba(0, 0, 0, 0.1);
-  border-top: 5px solid #3498db;
+  width: 30px;
+  height: 30px;
+  border: 3px solid rgba(173, 216, 230, 0.6);
+  border-top: 3px solid #ADD8E6;
   border-radius: 50%;
   animation: spin 1s linear infinite;
+  margin-right: 10px;
 }
 
 @keyframes spin {
@@ -736,22 +737,7 @@ h2 {
 
 /* 旋转加载动画的样式 */
 .spinner {
-  width: 30px; /* 调整大小 */
-  height: 30px; /* 调整大小 */
-  border: 3px solid rgba(173, 216, 230, 0.6); /* 使用浅蓝色 */
-  border-top: 3px solid #ADD8E6; /* 使用浅蓝色 */
-  border-radius: 50%;
-  animation: spin 1s linear infinite;
-  margin-right: 10px; /* 添加右边距 */
-}
-
-@keyframes spin {
-  0% {
-    transform: rotate(0deg);
-  }
-  100% {
-    transform: rotate(360deg);
-  }
+  display: none; /* 隐藏重复的spinner */
 }
 
 /* 隐藏元素 */
@@ -762,5 +748,38 @@ h2 {
 /* server-name类，用于调整服务器名称的位置 */
 .server-name {
   margin-left: 10px; /* 添加左边距 */
+}
+
+/* 默认样式（桌面端） */
+.nav-link {
+  border: none;
+  background: none;
+}
+
+/* 手机端样式 */
+@media screen and (max-width: 768px) {
+  .nav-link {
+    padding: 6px 12px;
+    border-radius: 16px;
+    border: 1px solid #e0e0e0;
+    background-color: #ffffff;
+    transition: all 0.3s ease;
+  }
+
+  .night-mode .nav-link {
+    border-color: #404040;
+    background-color: #1a1a1a;
+  }
+
+  .day-mode .nav-link {
+    border-color: #e0e0e0;
+    background-color: #ffffff;
+  }
+}
+
+/* 如果需要，可以为链接添加专门的样式 */
+.header-container a {
+  border: none;
+  background: none;
 }
 
