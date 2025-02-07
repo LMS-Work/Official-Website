@@ -8,8 +8,8 @@ const isDevelopment = window.location.hostname === 'localhost' ||
                      window.location.hostname === '127.0.0.1';
 
 const config: Config = {
-  apiBaseUrl: isDevelopment ? 'http://127.0.0.1:5000' : '/api',
-  wsBaseUrl: isDevelopment ? 'ws://127.0.0.1:5000' : 'wss://127.0.0.1'
+  apiBaseUrl: 'https://backend.egde.tcbmc.cc',
+  wsBaseUrl: 'wss://backend.egde.tcbmc.cc'
 };
 
 export default config;
